@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ScreeningForm.css'; 
+import './ScreeningForm.css';
 
 const ScreeningForm = () => {
   const [formData, setFormData] = useState({
@@ -23,13 +23,13 @@ const ScreeningForm = () => {
     phq_4_score: '',
     suicide_self_harm: 'No',
     smi_risk: 'No',
-    eligible_for_study: 'No', 
+    eligible_for_study: 'No',
     interest_in_study: 'No',
     date_of_1st_contact: '',
     date_of_2nd_contact: '',
     date_of_3rd_contact: '',
     survey_follow_up_notes: '',
-    timestamp: '', 
+    timestamp: '',
   });
 
   const handleChange = (e) => {
@@ -42,7 +42,7 @@ const ScreeningForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    formData.timestamp = new Date().toISOString(); 
+    formData.timestamp = new Date().toISOString();
 
     try {
       const response = await fetch('https://p65odeqbesg3vu2c33onkoziye0ebrxb.lambda-url.us-east-2.on.aws/', {
@@ -60,7 +60,7 @@ const ScreeningForm = () => {
         const errorResult = await response.json();
         throw new Error(errorResult.body || 'Unknown error occurred');
       }
-      
+
       alert('Screening data logged!');
     } catch (error) {
       alert(`Error submitting form: ${error.message}`);
@@ -70,12 +70,16 @@ const ScreeningForm = () => {
   return (
     <form className="screening-form" onSubmit={handleSubmit}>
       <header>
-      <h2>Harlem Strong Screening Form</h2>
+        <h2>Harlem Strong Screening Form</h2>
       </header>
       <div className="form-container">
         <div className="form-group">
-          <label>Participant ID:</label>
-          <input type="text" name="participant_id" placeholder="Enter participant ID" value={formData.participant_id} onChange={handleChange} />
+          <label>Provider Name:</label>
+          <input type="text" name="provider_name" placeholder="Enter provider name (Data Collector)" value={formData.provider_name} onChange={handleChange} />
+        </div>
+        <div className="form-group">
+          <label>Consumer Name:</label>
+          <input type="text" name="consumer_name" placeholder="Enter consumer name" value={formData.consumer_name} onChange={handleChange} />
         </div>
         <div className="form-group">
           <label>PHQ-4 Complete:</label>
@@ -86,37 +90,21 @@ const ScreeningForm = () => {
         </div>
         <div className="form-group">
           <label htmlFor="organization">Organization:</label>
-          <select id="organization" name="organization" className="form-control" value={formData.organization} onChange={handleChange}>
+          <select id="organization" name="organization" value={formData.organization} onChange={handleChange}>
             <option value="" disabled>Select organization</option>
-            <option value="HCCI">HCCI</option>
+            <option value="HCCI">Harlem Congregations for Community Improvement, Inc. (HCCI)</option>
             <option value="Ryan Health">Ryan Health</option>
-            <option value="HOPE">HOPE</option>
-            <option value="Community">Community</option>
+            <option value="Heritage Health and Housing">Heritage Health and Housing, Inc.</option>
+            <option value="Center for Comprehensive Health">Center for Comprehensive Health (CCHP)</option>
+            <option value="HOPE">Hope Community, Inc.</option>
+            <option value="Community">Community-Based Organizations</option>
+            <option value="Other">Other</option>
+            <option value="None or not applicable">None or not applicable</option>
           </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="mcc">MCC:</label>
-          <select id="mcc" name="mcc" className="form-control" value={formData.mcc} onChange={handleChange}>
-            <option value="" disabled>Select MCC</option>
-            {[...Array(6).keys()].map((num) => (
-              <option key={num + 1} value={num + 1}>{num + 1}</option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group">
-          <label>Cluster:</label>
-          <input type="text" name="cluster" placeholder="Enter cluster" value={formData.cluster} onChange={handleChange} />
         </div>
         <div className="form-group">
           <label>Address:</label>
           <input type="text" name="address" placeholder="Enter address" value={formData.address} onChange={handleChange} />
-        </div>
-      </div>
-
-      <div className="form-container">
-        <div className="form-group">
-          <label>Provider Name:</label>
-          <input type="text" name="provider_name" placeholder="Enter provider name" value={formData.provider_name} onChange={handleChange} />
         </div>
         <div className="form-group">
           <label>Screen Date:</label>
@@ -127,12 +115,8 @@ const ScreeningForm = () => {
           <input type="text" name="screening_id" placeholder="Enter screening ID" value={formData.screening_id} onChange={handleChange} />
         </div>
         <div className="form-group">
-          <label>Consumer Name:</label>
-          <input type="text" name="consumer_name" placeholder="Enter consumer name" value={formData.consumer_name} onChange={handleChange} />
-        </div>
-        <div className="form-group">
           <label htmlFor="gender">Gender:</label>
-          <select id="gender" name="gender" className="form-control" value={formData.gender} onChange={handleChange}>
+          <select id="gender" name="gender" value={formData.gender} onChange={handleChange}>
             <option value="" disabled>Select your gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
@@ -146,16 +130,28 @@ const ScreeningForm = () => {
           <label>DOB:</label>
           <input type="date" name="dob" value={formData.dob} onChange={handleChange} />
         </div>
-      </div>
-
-      <div className="form-container">
         <div className="form-group">
           <label>Race:</label>
-          <input type="text" name="race" placeholder="Enter race" value={formData.race} onChange={handleChange} />
+          <select name="race" value={formData.race} onChange={handleChange}>
+            <option value="" disabled>Select Race</option>
+            <option value="American Indian/ Alaska Native">American Indian/Alaska Native</option>
+            <option value="Asian">Asian</option>
+            <option value="Hawaiian or Pacific Islander">Hawaiian or Pacific Islander</option>
+            <option value="Black or African American">Black or African American</option>
+            <option value="White">White</option>
+            <option value="More than one race">More than one race</option>
+            <option value="Unknown">Unknown</option>
+            <option value="Other non-white">Other non-white</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
         <div className="form-group">
           <label>Ethnicity:</label>
-          <input type="text" name="ethnicity" placeholder="Enter ethnicity" value={formData.ethnicity} onChange={handleChange} />
+          <select name="ethnicity" value={formData.ethnicity} onChange={handleChange}>
+            <option value="">Select ethnicity</option>
+            <option value="Not Hispanic or Latino">Not Hispanic or Latino</option>
+            <option value="Hispanic or Latino">Hispanic or Latino</option>
+          </select>
         </div>
         <div className="form-group">
           <label>Email:</label>
@@ -181,23 +177,11 @@ const ScreeningForm = () => {
             placeholder="Enter score"
             min="0"
             max="12"
-            required
             value={formData.phq_4_score}
             onChange={handleChange}
-            onInput={(e) => {
-              if (e.target.value < 0) {
-                e.target.value = 0;
-              }
-              if (e.target.value > 12) {
-                e.target.value = 12;
-              }
-            }}
             className="large-input"
           />
         </div>
-      </div>
-
-      <div className="form-container">
         <div className="form-group">
           <label>Suicide/Self Harm:</label>
           <select name="suicide_self_harm" value={formData.suicide_self_harm} onChange={handleChange}>
@@ -212,46 +196,26 @@ const ScreeningForm = () => {
             <option value="No">No</option>
           </select>
         </div>
-        <div className="form-container">
-        <div className="form-row">
-          <div className="form-group">
-            <label>Eligible for Study:</label>
-            <select name="eligible_for_study" value={formData.eligible_for_study} onChange={handleChange}>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-          
-          <div className="form-group">
-            <label>Interest in Study:</label>
-            <select name="interest_in_study" value={formData.interest_in_study} onChange={handleChange}>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
+        <div className="form-group">
+          <label>Eligible for Study:</label>
+          <select name="eligible_for_study" value={formData.eligible_for_study} onChange={handleChange}>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
         </div>
-        </div>
-        <div className="form-container">
-          <div className="form-group">
-            <label>Date of 1st Contact:</label>
-            <input type="date" name="date_of_1st_contact" value={formData.date_of_1st_contact} onChange={handleChange} />
-          </div>
-          <div className="form-group">
-            <label>Date of 2nd Contact:</label>
-            <input type="date" name="date_of_2nd_contact" value={formData.date_of_2nd_contact} onChange={handleChange} />
-          </div>
-          <div className="form-group">
-            <label>Date of 3rd Contact:</label>
-            <input type="date" name="date_of_3rd_contact" value={formData.date_of_3rd_contact} onChange={handleChange} />
-          </div>
+        <div className="form-group">
+          <label>Interest in Study:</label>
+          <select name="interest_in_study" value={formData.interest_in_study} onChange={handleChange}>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
         </div>
         <div className="form-group">
           <label>Survey Follow-up Notes:</label>
           <textarea name="survey_follow_up_notes" placeholder="Enter follow-up notes" value={formData.survey_follow_up_notes} onChange={handleChange}></textarea>
         </div>
+        <button type="submit">Submit Screening</button>
       </div>
-
-      <button type="submit">Submit Screening</button>
     </form>
   );
 };
