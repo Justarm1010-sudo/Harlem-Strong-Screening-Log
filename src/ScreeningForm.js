@@ -74,12 +74,34 @@ const ScreeningForm = () => {
       </header>
       <div className="form-container">
         <div className="form-group">
+          <label>Participant ID:</label>
+          <input
+            type="text"
+            name="participant_id"
+            placeholder="Enter participant ID"
+            value={formData.participant_id}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
           <label>Provider Name:</label>
-          <input type="text" name="provider_name" placeholder="Enter provider name (Data Collector)" value={formData.provider_name} onChange={handleChange} />
+          <input
+            type="text"
+            name="provider_name"
+            placeholder="Enter provider name (Data Collector)"
+            value={formData.provider_name}
+            onChange={handleChange}
+          />
         </div>
         <div className="form-group">
           <label>Consumer Name:</label>
-          <input type="text" name="consumer_name" placeholder="Enter consumer name" value={formData.consumer_name} onChange={handleChange} />
+          <input
+            type="text"
+            name="consumer_name"
+            placeholder="Enter consumer name"
+            value={formData.consumer_name}
+            onChange={handleChange}
+          />
         </div>
         <div className="form-group">
           <label>PHQ-4 Complete:</label>
@@ -104,7 +126,13 @@ const ScreeningForm = () => {
         </div>
         <div className="form-group">
           <label>Address:</label>
-          <input type="text" name="address" placeholder="Enter address" value={formData.address} onChange={handleChange} />
+          <input
+            type="text"
+            name="address"
+            placeholder="Enter address"
+            value={formData.address}
+            onChange={handleChange}
+          />
         </div>
         <div className="form-group">
           <label>Screen Date:</label>
@@ -112,7 +140,13 @@ const ScreeningForm = () => {
         </div>
         <div className="form-group">
           <label>Screening ID:</label>
-          <input type="text" name="screening_id" placeholder="Enter screening ID" value={formData.screening_id} onChange={handleChange} />
+          <input
+            type="text"
+            name="screening_id"
+            placeholder="Enter screening ID"
+            value={formData.screening_id}
+            onChange={handleChange}
+          />
         </div>
         <div className="form-group">
           <label htmlFor="gender">Gender:</label>
@@ -155,11 +189,23 @@ const ScreeningForm = () => {
         </div>
         <div className="form-group">
           <label>Email:</label>
-          <input type="email" name="email" placeholder="Enter email" value={formData.email} onChange={handleChange} />
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            value={formData.email}
+            onChange={handleChange}
+          />
         </div>
         <div className="form-group">
           <label>Phone Number:</label>
-          <input type="text" name="contact_info" placeholder="Enter contact info" value={formData.contact_info} onChange={handleChange} />
+          <input
+            type="text"
+            name="contact_info"
+            placeholder="Enter contact info"
+            value={formData.contact_info}
+            onChange={handleChange}
+          />
         </div>
         <div className="form-group">
           <label>Preferred Contact Method:</label>
@@ -212,7 +258,12 @@ const ScreeningForm = () => {
         </div>
         <div className="form-group">
           <label>Survey Follow-up Notes:</label>
-          <textarea name="survey_follow_up_notes" placeholder="Enter follow-up notes" value={formData.survey_follow_up_notes} onChange={handleChange}></textarea>
+          <textarea
+            name="survey_follow_up_notes"
+            placeholder="Enter follow-up notes"
+            value={formData.survey_follow_up_notes}
+            onChange={handleChange}
+          ></textarea>
         </div>
         <button type="submit">Submit Screening</button>
       </div>
