@@ -18,6 +18,7 @@ const ScreeningForm = () => {
     race: '',
     ethnicity: '',
     email: '',
+    zip_code: '',
     contact_info: '',
     preferred_contact_method_time: 'Email',
     phq_4_score: '',
@@ -29,20 +30,79 @@ const ScreeningForm = () => {
     date_of_2nd_contact: '',
     date_of_3rd_contact: '',
     survey_follow_up_notes: '',
+    image_upload: null, 
     timestamp: '',
   });
 
+   const [showOtherRaceInput, setShowOtherRaceInput] = useState(false);
+  const [otherRace, setOtherRace] = useState('');
+
+  const [showOtherOrganizationInput, setShowOtherOrganizationInput] = useState(false);
+  const [otherOrganization, setOtherOrganization] = useState('');
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, files } = e.target;
+    if (type === 'file') {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: files[0], // Save the file object
+      }));
+    } else if (name === 'race') {
+      if (value === 'Other') {
+        setShowOtherRaceInput(true);
+      } else {
+        setShowOtherRaceInput(false);
+        setOtherRace('');
+      }
+      setFormData((prevData) => ({
+        ...prevData,
+        race: value,
+      }));
+    } else if (name === 'organization') {
+      if (value === 'Other') {
+        setShowOtherOrganizationInput(true);
+      } else {
+        setShowOtherOrganizationInput(false);
+        setOtherOrganization('');
+      }
+      setFormData((prevData) => ({
+        ...prevData,
+        organization: value,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleOtherRaceChange = (e) => {
+    setOtherRace(e.target.value);
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      race: e.target.value,
+    }));
+  };
+
+  const handleOtherOrganizationChange = (e) => {
+    setOtherOrganization(e.target.value);
+    setFormData((prevData) => ({
+      ...prevData,
+      organization: e.target.value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    formData.timestamp = new Date().toISOString();
+
+    const finalFormData = new FormData();
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] !== null) {
+        finalFormData.append(key, formData[key]);
+      }
+    });
+
 
     try {
       const response = await fetch('https://p65odeqbesg3vu2c33onkoziye0ebrxb.lambda-url.us-east-2.on.aws/', {
@@ -52,7 +112,7 @@ const ScreeningForm = () => {
         },
         body: JSON.stringify({
           action: 'log_screening',
-          ...formData,
+          ...finalFormData,
         }),
       });
 
@@ -73,16 +133,6 @@ const ScreeningForm = () => {
         <h2>Harlem Strong Screening Form</h2>
       </header>
       <div className="form-container">
-        <div className="form-group">
-          <label>Participant ID:</label>
-          <input
-            type="text"
-            name="participant_id"
-            placeholder="Enter participant ID"
-            value={formData.participant_id}
-            onChange={handleChange}
-          />
-        </div>
         <div className="form-group">
           <label>Provider Name:</label>
           <input
@@ -112,7 +162,12 @@ const ScreeningForm = () => {
         </div>
         <div className="form-group">
           <label htmlFor="organization">Organization:</label>
-          <select id="organization" name="organization" value={formData.organization} onChange={handleChange}>
+          <select
+            id="organization"
+            name="organization"
+            value={showOtherOrganizationInput ? 'Other' : formData.organization}
+            onChange={handleChange}
+          >
             <option value="" disabled>Select organization</option>
             <option value="HCCI">Harlem Congregations for Community Improvement, Inc. (HCCI)</option>
             <option value="Ryan Health">Ryan Health</option>
@@ -120,9 +175,20 @@ const ScreeningForm = () => {
             <option value="Center for Comprehensive Health">Center for Comprehensive Health (CCHP)</option>
             <option value="HOPE">Hope Community, Inc.</option>
             <option value="Community">Community-Based Organizations</option>
+            <option value="Faith-Based Organizations (Churches, Temples, Mosques, etc.)">
+              Faith-Based Organizations (Churches, Temples, Mosques, etc.)
+            </option>
             <option value="Other">Other</option>
             <option value="None or not applicable">None or not applicable</option>
           </select>
+          {showOtherOrganizationInput && (
+            <input
+              type="text"
+              placeholder="Specify other organization"
+              value={otherOrganization}
+              onChange={handleOtherOrganizationChange}
+            />
+          )}
         </div>
         <div className="form-group">
           <label>Address:</label>
@@ -131,6 +197,16 @@ const ScreeningForm = () => {
             name="address"
             placeholder="Enter address"
             value={formData.address}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Zipcode:</label>
+          <input
+            type="text"
+            name="zipcode"
+            placeholder="Enter zipcode"
+            value={formData.zipcode}
             onChange={handleChange}
           />
         </div>
@@ -166,7 +242,11 @@ const ScreeningForm = () => {
         </div>
         <div className="form-group">
           <label>Race:</label>
-          <select name="race" value={formData.race} onChange={handleChange}>
+          <select
+            name="race"
+            value={showOtherRaceInput ? 'Other' : formData.race}
+            onChange={handleChange}
+          >
             <option value="" disabled>Select Race</option>
             <option value="American Indian/ Alaska Native">American Indian/Alaska Native</option>
             <option value="Asian">Asian</option>
@@ -178,6 +258,14 @@ const ScreeningForm = () => {
             <option value="Other non-white">Other non-white</option>
             <option value="Other">Other</option>
           </select>
+          {showOtherRaceInput && (
+            <input
+              type="text"
+              placeholder="Specify other race"
+              value={otherRace}
+              onChange={handleOtherRaceChange}
+            />
+          )}
         </div>
         <div className="form-group">
           <label>Ethnicity:</label>
@@ -264,6 +352,15 @@ const ScreeningForm = () => {
             value={formData.survey_follow_up_notes}
             onChange={handleChange}
           ></textarea>
+        </div>
+        <div className="form-group">
+          <label>Image Upload:</label>
+          <input
+            type="file"
+            name="image_upload"
+            onChange={handleChange}
+            accept="image/*"
+          />
         </div>
         <button type="submit">Submit Screening</button>
       </div>
