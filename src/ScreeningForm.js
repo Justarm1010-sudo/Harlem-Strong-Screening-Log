@@ -130,7 +130,7 @@ const ScreeningForm = () => {
   return (
     <form className="screening-form" onSubmit={handleSubmit}>
       <header>
-        <h2>Harlem Strong Screening Form</h2>
+        <h2>Harlem Strong Screening Log</h2>
       </header>
       <div className="form-container">
         <div className="form-group">
@@ -230,10 +230,7 @@ const ScreeningForm = () => {
             <option value="" disabled>Select your gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
-            <option value="nonbinary">Nonbinary</option>
-            <option value="genderfluid">Genderfluid</option>
-            <option value="intersex">Intersex</option>
-            <option value="prefer_not_to_say">Prefer not to say</option>
+            <option value="Other">Other</option>
           </select>
         </div>
         <div className="form-group">
