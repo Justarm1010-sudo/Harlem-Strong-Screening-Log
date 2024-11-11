@@ -30,11 +30,12 @@ const ScreeningForm = () => {
     date_of_2nd_contact: '',
     date_of_3rd_contact: '',
     survey_follow_up_notes: '',
+    hear_about_us : '',
     image_upload: null, 
     timestamp: '',
   });
 
-   const [showOtherRaceInput, setShowOtherRaceInput] = useState(false);
+  const [showOtherRaceInput, setShowOtherRaceInput] = useState(false);
   const [otherRace, setOtherRace] = useState('');
 
   const [showOtherOrganizationInput, setShowOtherOrganizationInput] = useState(false);
@@ -112,7 +113,7 @@ const ScreeningForm = () => {
         },
         body: JSON.stringify({
           action: 'log_screening',
-          ...finalFormData,
+          ...formData,
         }),
       });
 
@@ -340,6 +341,21 @@ const ScreeningForm = () => {
             <option value="Yes">Yes</option>
             <option value="No">No</option>
           </select>
+          <div className="form-group">
+          <label>How Did They Hear About Harlem Strong:</label>
+          <select name="hear_about_us" value={formData.hear_about_us} onChange={handleChange}>
+          <option value="Harlem Strong Navigator">Harlem Strong Navigator</option>
+          <option value="Community Event">Community Event</option>
+          <option value="Housing/Building Event">Housing/Building Event</option>
+          <option value="Social Media">Social media</option>
+          <option value="Word of Mouth">Word of Mouth</option>
+          <option value="House of Worship">House of Worship</option>
+          <option value="Walk-in, no referral">Walk-in, no referral</option>
+          <option value="Promotion Materials">Promotion Materials</option>
+          <option value="Other Community Congregation">Other Communtiy Congregation</option>
+          <option value="School">School</option>
+          </select>
+        </div>
         </div>
         <div className="form-group">
           <label>Survey Follow-up Notes:</label>
