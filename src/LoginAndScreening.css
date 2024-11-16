@@ -1,0 +1,50 @@
+/* Center the entire page container */
+.page-container {
+    display: flex;
+    flex-direction: column; /* Stack logo, title, and Authenticator vertically */
+    justify-content: center; /* Vertically center all elements */
+    align-items: center; /* Horizontally center all elements */
+    height: 100vh; /* Full height of the viewport */
+    text-align: center;
+    background-color: #f5f5f5; /* Optional background color */
+  }
+  
+  /* Logo styling */
+  .logo {
+    width: 120px; /* Adjust the size of the logo */
+    height: auto;
+    margin-bottom: 20px; /* Space below the logo */
+  }
+  
+  /* Page title styling */
+  .page-title {
+    font-size: 1.8rem;
+    margin-bottom: 30px; /* Space between the title and the Authenticator */
+  }
+  
+  /* Amplify Authenticator wrapper */
+  .authenticator-wrapper {
+    display: flex;
+    justify-content: center; /* Center Authenticator horizontally */
+    align-items: center; /* Center Authenticator vertically */
+    width: 100%;
+    max-width: 400px; /* Limit Authenticator width */
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional styling for modern look */
+  }
+  
+  [data-amplify-authenticator] {
+    margin: auto !important; /* Center within the container */
+    display: flex !important;
+    justify-content: center !important; /* Center horizontally */
+    align-items: center !important; /* Center vertically */
+    width: 100% !important;
+    max-width: 400px !important; /* Consistent Authenticator width */
+    padding: 20px !important;
+    background-color: rgb(255, 255, 255) !important;
+    border-radius: 10px !important; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(46, 36, 36, 0.1) !important; /* Optional shadow for better visibility */
+    position: relative !important; /* Ensure proper positioning */
+    top: 50% !important; /* Move down to the middle of the parent */
+    transform: translateY(-50%) !important; /* Adjust position to be perfectly centered vertically */
+}

@@ -1,25 +1,23 @@
-// src/LoginAndScreening.js
 import React from 'react';
-import { useAuthenticator } from '@aws-amplify/ui-react';
-import ScreeningForm from './ScreeningForm';
-//change to sign in hook state only for authenticator 
-const LoginAndScreening = () => {
-  const { user, signOut } = useAuthenticator((context) => [context.user]);
+import { Authenticator } from '@aws-amplify/ui-react';
+import ScreeningForm from './ScreeningForm'; // Ensure the path is correct
 
+const LoginAndScreening = () => {
   return (
-    <div>
-      {user ? (
-        <div>
-          <h2>Welcome, Data Collector!</h2>
+    <Authenticator>
+      {({ signOut, user }) => (
+        <div style={{ padding: '20px', textAlign: 'center' }}>
+          <h1>Welcome to the Screening Log Portal!</h1>
+          <h2>Hello, Data Collector!</h2>
           <button onClick={signOut}>Sign Out</button>
-          <ScreeningForm />
-        </div>
-      ) : (
-        <div>
-          <h1>Please log in to access the screening form</h1>
+
+          {/* Render ScreeningForm */}
+          <div style={{ marginTop: '20px' }}>
+            <ScreeningForm />
+          </div>
         </div>
       )}
-    </div>
+    </Authenticator>
   );
 };
 
