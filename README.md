@@ -1,2 +1,2 @@
-<h1>**Harlem Strong Screening Log Application**</h1>
+<h1><strong>Harlem Strong Screening Log Application</strong></h1>
 
