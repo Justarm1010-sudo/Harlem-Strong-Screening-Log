@@ -5,6 +5,7 @@ This project's goal was to increase the efficiency and accuracy of physical data
 
 
 <h3>Built With:</h3>
+
 1. Amazon Lambda (AWS) - Used AWS Lambda for event handling and maintaining website uptime cost-effectively.
 2. Amazon Cognito (AWS) - Implemented Amazon Cognito for user pool creation and password management.
 3. Amazon Amplify (AWS) - Utilized AWS Amplify for hosting the front-end and deploying Git changes to the live site.
